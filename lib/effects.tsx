@@ -106,63 +106,54 @@ export const effects: Effect[] = [
     ]
   },
   {
-    name: 'Color Changer',
+    name: 'Neon Glowing Text',
     component: ({ text, params }) => (
-      <motion.div
-        initial={{ color: '#000000' }}
-        animate={{ color: params.color }}
-        transition={{ duration: params.duration }}
+      <motion.span
+        style={{
+          color: params.color,
+          fontWeight: 'bold',
+          textShadow: `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`,
+        }}
+        animate={{
+          textShadow: [
+            `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`,
+            `0px 0px 0px ${params.glowColor}`,
+            `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`
+          ]
+        }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
       >
         {text}
-      </motion.div>
+      </motion.span>
     ),
-    codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function ColorChanger({ text }) {\n  return (\n    <motion.div\n      initial={{ color: '#000000' }}\n      animate={{ color: {color} }}\n      transition={{ duration: {duration} }}\n    >\n      {text}\n    </motion.div>\n  );\n}\n`,
+    codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function NeonText({ text }) {\n  return (\n    <motion.span\n      style={{ color: {color}, fontWeight: 'bold', textShadow: '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}' }}\n      animate={{\n        textShadow: [\n          '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}',\n          '0px 0px 0px {glowColor}',\n          '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}'\n        ]\n      }}\n      transition={{\n        duration: 2,\n        repeat: Infinity,\n        repeatType: 'reverse',\n        ease: 'easeInOut'\n      }}\n    >\n      {text}\n    </motion.span>\n  );\n}\n`,
     paramsDefinition: [
-      {
-        name: 'color',
-        type: 'color',
-        label: 'Target Color',
-        defaultValue: '#ff0000'
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        label: 'Color Change Duration',
-        defaultValue: 1,
-        min: 0.1,
-        max: 5,
-        step: 0.1
-      }
+      { name: 'color', type: 'color', label: 'Text Color', defaultValue: '#ff00ff' },
+      { name: 'glowColor', type: 'color', label: 'Glow Color', defaultValue: '#ff00ff' },
+      { name: 'glowStrength', type: 'number', label: 'Glow Strength', defaultValue: 5, min: 1, max: 10, step: 0.1 },
+      { name: 'glowBlur', type: 'number', label: 'Glow Blur', defaultValue: 10, min: 1, max: 20, step: 1 }
     ]
   },
   {
-    name: 'Slider',
+    name: 'Bouncy Text',
     component: ({ text, params }) => (
-      <motion.div
-        initial={{ x: params.direction === 'left' ? '-100vw' : '100vw' }}
-        animate={{ x: 0 }}
-        transition={{ duration: params.duration }}
+      <motion.span
+        style={{ display: 'inline-block' }}
+        animate={{
+          y: [0, -30, 0]
+        }}
+        transition={{
+          duration: 0.6,
+          ease: 'easeOut',
+          repeat: Infinity,
+          repeatType: 'loop',
+          repeatDelay: 0.5
+        }}
       >
         {text}
-      </motion.div>
+      </motion.span>
     ),
-    codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function Slider({ text }) {\n  return (\n    <motion.div\n      initial={{ x: {direction} === 'left' ? '-100vw' : '100vw' }}\n      animate={{ x: 0 }}\n      transition={{ duration: {duration} }}\n    >\n      {text}\n    </motion.div>\n  );\n}\n`,
-    paramsDefinition: [
-      {
-        name: 'direction',
-        type: 'string',
-        label: 'Slide Direction',
-        defaultValue: 'left'
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        label: 'Slide Duration',
-        defaultValue: 1,
-        min: 0.1,
-        max: 5,
-        step: 0.1
-      }
-    ]
-  },
+    codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function BouncyText({ text }) {\n  return (\n    <motion.span\n      style={{ display: 'inline-block' }}\n      animate={{ y: [0, -30, 0] }}\n      transition={{\n        duration: 0.6,\n        ease: 'easeOut',\n        repeat: Infinity,\n        repeatType: 'loop',\n        repeatDelay: 0.5\n      }}\n    >\n      {text}\n    </motion.span>\n  );\n}\n`,
+    paramsDefinition: []
+  }
 ];
