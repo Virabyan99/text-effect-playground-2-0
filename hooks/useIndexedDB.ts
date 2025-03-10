@@ -44,6 +44,7 @@ export function useIndexedDB() {
       getRequest.onsuccess = (event: Event) => {
         const savedData = (event.target as IDBRequest<ProgressData>).result;
         if (savedData) {
+          console.log('Data retrieved from IndexedDB:', savedData);
           setValue(savedData);
         }
       };
@@ -70,7 +71,7 @@ export function useIndexedDB() {
       const transaction = db.transaction(storeName, 'readwrite');
       const store = transaction.objectStore(storeName);
       const dataToSave: ProgressData = { id: 'progress', ...newData };
-      console.log('Data to save:', dataToSave);
+      console.log('Data to save:', dataToSave); // Log data to be saved
       const putRequest = store.put(dataToSave);
 
       putRequest.onsuccess = () => {

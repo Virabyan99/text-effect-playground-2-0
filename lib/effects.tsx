@@ -12,6 +12,7 @@ interface Param {
 
 interface Effect {
   name: string;
+  codeName: string; // Added codeName
   component: React.FC<{ text: string; params: any }>;
   codeTemplate: string;
   paramsDefinition: Param[];
@@ -20,12 +21,14 @@ interface Effect {
 export const effects: Effect[] = [
   {
     name: 'No Effect',
+    codeName: 'NoEffect', // Added codeName
     component: ({ text }) => <div>{text}</div>,
     codeTemplate: `export default function NoEffect({ text }) {\n  return <div>{text}</div>;\n}\n`,
     paramsDefinition: []
   },
   {
     name: 'Fader',
+    codeName: 'Fader', // Added codeName
     component: ({ text, params }) => (
       <motion.div
         initial={{ opacity: 0 }}
@@ -50,6 +53,7 @@ export const effects: Effect[] = [
   },
   {
     name: 'Cascading',
+    codeName: 'Cascading', // Added codeName
     component: ({ text, params }) => (
       <motion.div
         initial={{ opacity: 0 }}
@@ -83,6 +87,7 @@ export const effects: Effect[] = [
   },
   {
     name: 'Rotator',
+    codeName: 'Rotator', // Added codeName
     component: ({ text, params }) => (
       <motion.div
         initial={{ rotate: 0 }}
@@ -107,6 +112,7 @@ export const effects: Effect[] = [
   },
   {
     name: 'Neon Glowing Text',
+    codeName: 'NeonText', // Added codeName
     component: ({ text, params }) => (
       <motion.span
         style={{
@@ -136,6 +142,7 @@ export const effects: Effect[] = [
   },
   {
     name: 'Bouncy Text',
+    codeName: 'BouncyText', // Added codeName
     component: ({ text, params }) => (
       <motion.span
         style={{ display: 'inline-block' }}
@@ -154,6 +161,78 @@ export const effects: Effect[] = [
       </motion.span>
     ),
     codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function BouncyText({ text }) {\n  return (\n    <motion.span\n      style={{ display: 'inline-block' }}\n      animate={{ y: [0, -30, 0] }}\n      transition={{\n        duration: 0.6,\n        ease: 'easeOut',\n        repeat: Infinity,\n        repeatType: 'loop',\n        repeatDelay: 0.5\n      }}\n    >\n      {text}\n    </motion.span>\n  );\n}\n`,
+    paramsDefinition: []
+  },
+  {
+    name: 'MicroTextWeightShiftEffect',
+    codeName: 'MicroTextWeightShiftEffect', // Added codeName
+    component: ({ text }) => (
+      <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">
+        {text.split('').map((char, index) => (
+          <motion.span
+            key={index}
+            className="inline-block text-2xl m-1"
+            initial={{ filter: 'blur(2px)' }}
+            animate={{ filter: 'blur(0px)' }}
+            transition={{
+              duration: 0.6,
+              ease: 'easeInOut',
+              repeat: Infinity,
+              repeatType: 'reverse',
+              delay: index * 0.05,
+            }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </div>
+    ),
+    codeTemplate: `export default function MicroTextWeightShiftEffect({ text }) {\n  return (\n    <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">\n      {text.split('').map((char, index) => (\n        <motion.span\n          key={index}\n          className="inline-block text-2xl m-1"\n          initial={{ filter: 'blur(2px)' }}\n          animate={{ filter: 'blur(0px)' }}\n          transition={{\n            duration: 0.6,\n            ease: 'easeInOut',\n            repeat: Infinity,\n            repeatType: 'reverse',\n            delay: index * 0.05,\n          }}\n        >\n          {char}\n        </motion.span>\n      ))}\n    </div>\n  );\n}`,
+    paramsDefinition: []
+  },
+  {
+    name: 'SoftFocusPulseEffect',
+    codeName: 'SoftFocusPulseEffect', // Added codeName
+    component: ({ text }) => (
+      <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">
+        {text.split('').map((char, index) => (
+          <motion.span
+            key={index}
+            className="inline-block text-2xl m-1 font-light"
+            whileHover={{ fontWeight: 700 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </div>
+    ),
+    codeTemplate: `export default function SoftFocusPulseEffect({ text }) {\n  return (\n    <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">\n      {text.split('').map((char, index) => (\n        <motion.span\n          key={index}\n          className="inline-block text-2xl m-1 font-light"\n          whileHover={{ fontWeight: 700 }}\n          transition={{ duration: 0.2, ease: 'easeInOut' }}\n        >\n          {char}\n        </motion.span>\n      ))}\n    </div>\n  );\n}`,
+    paramsDefinition: []
+  },
+  {
+    name: 'GentleOpacityFadeEffect',
+    codeName: 'GentleOpacityFadeEffect', // Added codeName
+    component: ({ text }) => (
+      <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">
+        {text.split('').map((char, index) => (
+          <motion.span
+            key={index}
+            className="inline-block text-2xl m-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.8,
+              ease: 'easeOut',
+              delay: index * 0.05,
+            }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </div>
+    ),
+    codeTemplate: `export default function GentleOpacityFadeEffect({ text }) {\n  return (\n    <div className="h-full flex flex-wrap items-center justify-center p-4 overflow-auto">\n      {text.split('').map((char, index) => (\n        <motion.span\n          key={index}\n          className="inline-block text-2xl m-1"\n          initial={{ opacity: 0 }}\n          animate={{ opacity: 1 }}\n          transition={{\n            duration: 0.8,\n            ease: 'easeOut',\n            delay: index * 0.05,\n          }}\n        >\n          {char}\n        </motion.span>\n      ))}\n    </div>\n  );\n}`,
     paramsDefinition: []
   }
 ];
