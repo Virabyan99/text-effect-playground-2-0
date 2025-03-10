@@ -111,36 +111,6 @@ export const effects: Effect[] = [
     ]
   },
   {
-    name: 'Neon Glowing Text',
-    codeName: 'NeonText', // Added codeName
-    component: ({ text, params }) => (
-      <motion.span
-        style={{
-          color: params.color,
-          fontWeight: 'bold',
-          textShadow: `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`,
-        }}
-        animate={{
-          textShadow: [
-            `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`,
-            `0px 0px 0px ${params.glowColor}`,
-            `${params.glowStrength}px ${params.glowStrength}px ${params.glowBlur}px ${params.glowColor}`
-          ]
-        }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
-      >
-        {text}
-      </motion.span>
-    ),
-    codeTemplate: `import { motion } from 'framer-motion';\n\nexport default function NeonText({ text }) {\n  return (\n    <motion.span\n      style={{ color: {color}, fontWeight: 'bold', textShadow: '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}' }}\n      animate={{\n        textShadow: [\n          '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}',\n          '0px 0px 0px {glowColor}',\n          '{glowStrength}px {glowStrength}px {glowBlur}px {glowColor}'\n        ]\n      }}\n      transition={{\n        duration: 2,\n        repeat: Infinity,\n        repeatType: 'reverse',\n        ease: 'easeInOut'\n      }}\n    >\n      {text}\n    </motion.span>\n  );\n}\n`,
-    paramsDefinition: [
-      { name: 'color', type: 'color', label: 'Text Color', defaultValue: '#ff00ff' },
-      { name: 'glowColor', type: 'color', label: 'Glow Color', defaultValue: '#ff00ff' },
-      { name: 'glowStrength', type: 'number', label: 'Glow Strength', defaultValue: 5, min: 1, max: 10, step: 0.1 },
-      { name: 'glowBlur', type: 'number', label: 'Glow Blur', defaultValue: 10, min: 1, max: 20, step: 1 }
-    ]
-  },
-  {
     name: 'Bouncy Text',
     codeName: 'BouncyText', // Added codeName
     component: ({ text, params }) => (
